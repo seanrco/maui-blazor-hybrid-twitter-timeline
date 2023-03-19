@@ -1,0 +1,20 @@
+﻿@using Microsoft.JSInterop
+
+@((MarkupString)"<a class=\"twitter-timeline\" href=\"https://twitter.com/dotnet?ref_src=twsrc%5Etfw\" data-tweet-limit=\"2\" data-chrome=\"noheader nofooter\">Tweets by TwitterDev</a>")
+
+@code {
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    [Parameter]
+    public string DataTweetLimit { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("twttr.widgets.load");
+        }
+    }
+}
